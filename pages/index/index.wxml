@@ -1,6 +1,7 @@
 <!--index.wxml-->
 <view class="container">
   <view class="userinfo">
+    <button bindtap="getSystemInfo">Get System info</button>
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
@@ -9,6 +10,14 @@
   </view>
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
-    <rich-text>{{richData}}</rich-text>
+    <text>{{systemInfo}}</text>
+  </view>
+  <view class="page-body-wrapper">
+    <camera device-position="back" flash="off" binderror="error" style="width: 320%; height: 200px;"></camera>
+    <view class="btn-area">
+      <button type="primary" bindtap="takePhoto">拍照</button>
+    </view>
+    <view class="preview-tips">预览</view>
+    <image wx:if="{{src}}" mode="widthFix" src="{{src}}"></image>
   </view>
 </view>

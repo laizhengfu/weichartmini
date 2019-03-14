@@ -17,6 +17,7 @@ Page({
     })
   },
   onLoad: function () {
+    this.ctx = wx.createCameraContext()
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -51,5 +52,33 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  getSystemInfo: function() {
+    try {
+      const res = wx.getSystemInfoSync()
+      console.log(res.model)
+      console.log(res.pixelRatio)
+      console.log(res.windowWidth)
+      console.log(res.windowHeight)
+      console.log(res.language)
+      console.log(res.version)
+      console.log(res.platform)
+      this.setData({ systemInfo: `model:${res.model}`})
+    } catch (e) {
+      // Do something when catch error
+    }
+  },
+  takePhoto() {
+    this.ctx.takePhoto({
+      quality: 'high',
+      success: (res) => {
+        this.setData({
+          src: res.tempImagePath
+        })
+      }
+    })
+  },
+  error(e) {
+    console.log(e.detail)
   }
 })
